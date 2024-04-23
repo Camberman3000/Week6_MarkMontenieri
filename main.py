@@ -1,16 +1,12 @@
 # Mark Montenieri - MS548
-# Week 3 project - Estimated time to complete - 2 hours
-# Actual time to complete - 2 hours
-# from textblob lib import TextBlob method
-import urllib.request
-from nltk import NaiveBayesClassifier as nbc
-from nltk.tokenize import word_tokenize
-from itertools import chain
+# Week 6 project - Estimated time to complete - 2 hours
+# Actual time to complete - 20 hours
+
 import pandas as pd
-import nltk
 import tkinter as tk
 from tkinter import *
 from textblob.classifiers import NaiveBayesClassifier
+from sklearn.feature_extraction.text import re
 
 
 def create_sentiment(rating):
@@ -20,9 +16,6 @@ def create_sentiment(rating):
         return 1  # positive sentiment
     else:
         return 0  # neutral sentiment
-
-
-from sklearn.feature_extraction.text import re
 
 
 def clean_data(review):
@@ -67,6 +60,7 @@ def analyze_text():
     print("Classification", cl.classify("Rating"))
     classification_str.set(cl.classify("Rating"))
 
+
 train = [('I love this sandwich.', 'pos'),
          ('This is an amazing place!', 'pos'),
          ('I feel very good about these beers.', 'pos'),
@@ -100,8 +94,6 @@ window.deiconify()
 
 analysis_button = tk.Button(window, text="Analyze Data", command=analyze_text)  # Analyze button
 analysis_button.grid(columnspan=2, row=2, padx=5, pady=5)
-
-
 
 accuracy_str = tk.StringVar()
 accuracy_str.set('')

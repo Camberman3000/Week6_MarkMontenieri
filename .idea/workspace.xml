@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="428dc64b-5743-4238-bd10-8a0b8abdb5c9" name="Changes" comment="Pausing here and trying something else">
+    <list default="true" id="428dc64b-5743-4238-bd10-8a0b8abdb5c9" name="Changes" comment="Ready for turn-in">
+      <change afterPath="$PROJECT_DIR$/tripadvisor_hotel_reviews.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -79,7 +80,7 @@
       <option name="presentableId" value="Default" />
       <updated>1713781630149</updated>
       <workItem from="1713781633337" duration="13969000" />
-      <workItem from="1713874531199" duration="6755000" />
+      <workItem from="1713874531199" duration="6909000" />
     </task>
     <task id="LOCAL-00001" summary="Gutted and roughed out for Sentiment analysis">
       <option name="closed" value="true" />
@@ -97,7 +98,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713819549175</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Ready for turn-in">
+      <option name="closed" value="true" />
+      <created>1713883303775</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713883303775</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,9 +116,10 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Gutted and roughed out for Sentiment analysis" />
     <MESSAGE value="Pausing here and trying something else" />
-    <option name="LAST_COMMIT_MESSAGE" value="Pausing here and trying something else" />
+    <MESSAGE value="Ready for turn-in" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ready for turn-in" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Week6_MarkMontenieri$main.coverage" NAME="main Coverage Results" MODIFIED="1713883186594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Week6_MarkMontenieri$main.coverage" NAME="main Coverage Results" MODIFIED="1713883288745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
