@@ -6,60 +6,81 @@ import urllib.request
 from nltk import NaiveBayesClassifier as nbc
 from nltk.tokenize import word_tokenize
 from itertools import chain
-
+import pandas as pd
 import nltk
 import tkinter as tk
 from tkinter import *
+from textblob.classifiers import NaiveBayesClassifier
 
 
+def create_sentiment(rating):
+    if rating == 1 or rating == 2:
+        return -1  # negative sentiment
+    elif rating == 4 or rating == 5:
+        return 1  # positive sentiment
+    else:
+        return 0  # neutral sentiment
 
-def document_features(document):
-    words = set(document)
-    doc_features = {}
-    for word in word_features:
-        doc_features[f'contains({word})'] = (word in words)
-        return doc_features
+
+from sklearn.feature_extraction.text import re
+
+
+def clean_data(review):
+    no_punc = re.sub(r'[^\w\s]', '', review)
+    no_digits = ''.join([i for i in no_punc if not i.isdigit()])
+
+    return (no_digits)
+
 
 def analyze_text():
-    data = urllib.request.urlopen("https://www.google.com/").read(20000)  # read only 20 000 chars
-    data = data.decode('utf-8')
-    #print("data: ", data)
+    df = pd.read_csv('./tripadvisor_hotel_reviews.csv')
+    df.head()
+    #print("data: ", df)
+    len(df.index)
+    df['Sentiment'] = df['Rating'].apply(create_sentiment)
+    df['Review'] = df['Review'].apply(clean_data)
+    df['Review'][0]
 
-    all_words = nltk.FreqDist(w.lower() for w in data)
-    word_features = list(all_words.keys())[:2000]
-    featuresets = [(document_features(d), c) for (d, c) in data[1, 2]]
-    train_set, test_set = featuresets[1000:], featuresets[:1000]
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    tfidf = TfidfVectorizer(strip_accents=None,
+                            lowercase=False,
+                            preprocessor=None)
 
-    #  Train a Naive Bayes classifier
-    classifier = nltk.NaiveBayesClassifier.train(train_set)
-    # Accuracy
-    accuracy = nltk.classify.accuracy(classifier, test_set)
+    X = tfidf.fit_transform(df['Review'])
+    from sklearn.model_selection import train_test_split
+    y = df['Sentiment']  # target variable
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+    from sklearn.linear_model import LogisticRegression
+    lr = LogisticRegression(solver='liblinear')
+    lr.fit(X_train, y_train)  # fit the model
+    preds = lr.predict(X_test)  # make predictions
+
+    # Sentiment Analysis
+    from sklearn.metrics import accuracy_score
+    accuracy = accuracy_score(preds, y_test)  # 0.86
     print("Accuracy: ", accuracy)
+    accuracy_str.set(accuracy)
 
-    example_text = "This Movie is bad"
-    features = document_features(example_text.split())
-    print("Classification: ", classifier.classify(features))
+    # Train Classifier
+    cl = NaiveBayesClassifier(train)
+    print("Classification", cl.classify("Rating"))
+    classification_str.set(cl.classify("Rating"))
 
-
-
-train_set = [('I love this sandwich.', 'pos'),
-             ('This is an amazing place!', 'pos'),
-             ('I feel very good about these beers.', 'pos'),
-             ('This is my best work.', 'pos'),
-             ("What an awesome view", 'pos'),
-             ('I do not like this restaurant', 'neg'),
-             ('I am tired of this stuff.', 'neg'),
-             ("I can't deal with this", 'neg'),
-             ('He is my sworn enemy!', 'neg'),
-             ('My boss is horrible.', 'neg')]
-
-
+train = [('I love this sandwich.', 'pos'),
+         ('This is an amazing place!', 'pos'),
+         ('I feel very good about these beers.', 'pos'),
+         ('This is my best work.', 'pos'),
+         ("What an awesome view", 'pos'),
+         ('I do not like this restaurant', 'neg'),
+         ('I am tired of this stuff.', 'neg'),
+         ("I can't deal with this", 'neg'),
+         ('He is my sworn enemy!', 'neg'),
+         ('My boss is horrible.', 'neg')]
 
 window = tk.Tk()
-window.title("Sentiment Analysis - Please choose a website URL containing an article")
+window.title("Sentiment Analysis of TripAdvisor hotel reviews ")
 window.geometry('500x500')
-
-# window.eval('tk::PlaceWindow . center')
 
 """
 centers a tkinter window
@@ -77,13 +98,10 @@ y = window.winfo_screenheight() // 2 - win_height // 2
 window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 window.deiconify()
 
-analysis_button = tk.Button(window, text="Analyze URL", command=analyze_text)  # Analyze button
+analysis_button = tk.Button(window, text="Analyze Data", command=analyze_text)  # Analyze button
 analysis_button.grid(columnspan=2, row=2, padx=5, pady=5)
 
-url_label = tk.Label(window, text="URL")  # URL Label
-url_label.grid(column=0, row=3, padx=5, pady=5)
-url_box = tk.Entry(window)  # URL textbox
-url_box.grid(column=1, row=3, padx=5, pady=5)
+
 
 accuracy_str = tk.StringVar()
 accuracy_str.set('')
